@@ -32,7 +32,7 @@ public class HttpClientHelper {
 	try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(globalConfig).build()) {
             //httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
             final HttpGet getRequest = new HttpGet(url);
-            final RequestConfig localConfig = RequestConfig.copy(globalConfig).setCookieSpec(CookieSpecs.DEFAULT).build();
+            final RequestConfig localConfig = RequestConfig.copy(globalConfig).setCookieSpec(CookieSpecs.IGNORE_COOKIES).build();
             getRequest.setConfig(localConfig);
             final HttpResponse response = httpClient.execute(getRequest);
             //int code = response.getStatusLine().getStatusCode();

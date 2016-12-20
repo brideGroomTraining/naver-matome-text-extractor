@@ -5,22 +5,19 @@
  */
 package naver.matome.http.saver;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.lang.StringUtils;
+
 /**
  *
  * @author ryoji
  */
 public class HttpContentsCleaner {
     public static String clean(String contents) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>\n" +
-                "<html xmlns:og=\"http://ogp.me/ns#\" xmlns:fb=\"http://www.facebook.com/2008/fbml\" dir=\"ltr\">\n" +
-                "<head><meta charset=\"UTF-8\"></head><body>");
-        String[] lines = contents.split("\n");
-        for (String line : lines) {
-            if (!line.contains("詳細を見る</a>")) {
-                sb.append(line);
-            }
-        }
-        return sb.append("</body></html>").toString();
+        List<String> arrayLines = Arrays.asList(contents.split("\n"));
+        List<String> filtered = arrayLines.stream().filter(s -> !s.contains("詳細を見る</a>")).collect(Collectors.toList());
+        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>"  + StringUtils.join(filtered.toArray(), "\n") + "</body></html>";
     }
 }
